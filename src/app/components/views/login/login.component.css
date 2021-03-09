@@ -1,0 +1,36 @@
+h2{
+    display: inline;
+    
+}
+
+.person{
+    
+    width: 68%;
+    display: inline;
+    text-align: center;
+
+}
+
+
+label{
+    text-align: center;
+    display: block;
+    margin-top: 10%;
+}
+
+a{
+    text-decoration: none;
+    
+}
+
+mat-card-title{
+    color:rgb(0, 135, 49) ;
+
+}
+
+
+.cartao{
+    width: 30%;
+    height: 20%;
+    margin: 5% auto;
+}

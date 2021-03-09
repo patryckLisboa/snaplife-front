@@ -1,0 +1,22 @@
+<mat-card class="home mat-elevation-z4 cartao">
+    <mat-card-title>
+      <a> <!--quando router for vazio, é pq está no home "/"-->
+        <div class="login">
+          <mat-icon class="person">person</mat-icon>
+          <mat-form-field class="campoLogin">
+            <mat-label >Login</mat-label>
+            <input matInput [(ngModel)]="nutricionista.usuario">
+          </mat-form-field>
+          <mat-form-field class="senha">
+            <mat-label >Senha</mat-label>
+            <input  [(ngModel)]="nutricionista.senha" matInput [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <button mat-button (click)="navegarParaCategoriaClientes()" style="display: block; align-items: center; justify-content: center;">Entrar</button>
+        </div>
+      </a>
+    </mat-card-title>
+</mat-card>
+
