@@ -11,7 +11,7 @@ import { NutricionistaService } from './nutricionista.service';
 export class TelaLoginComponent implements OnInit {
 
   nutricionista: Nutricionista = {
-    codigo: '',
+    codigo: 0,
     celular: '',
     certificados: '',
     usuario: '',
@@ -20,7 +20,7 @@ export class TelaLoginComponent implements OnInit {
     senha: '',
     telefone: ''
   }
-
+  id = 0;
   hide = true;
 
   nutricionistas: Nutricionista[] = [];
@@ -40,7 +40,9 @@ export class TelaLoginComponent implements OnInit {
   navegarParaCategoriaClientes(){
     this.nutricionistas.forEach((nut) =>{
       if(nut.senha == this.nutricionista.senha || nut.usuario == this.nutricionista.usuario){
-        this.router.navigate(["/cliente"]);
+        
+        this.id = nut.codigo || 0;
+        this.router.navigate([`/nutricionista/${this.id}/clientes`]);
       }
     })
   }

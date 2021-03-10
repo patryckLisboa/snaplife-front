@@ -1,0 +1,55 @@
+<form>
+    <h1>CRIANDO UM NOVO CLIENTE</h1>
+    
+    <mat-form-field class="form">
+        <mat-label>Nome completo:</mat-label>
+        <input matInput [(ngModel)]="cliente.nomeCompleto" [formControl]="nomeCompleto" required type="text" name="nomeCompleto" placeholder="Ex: Pedro Algusto Santos" maxlength="100">
+        <mat-error *ngIf="nomeCompleto.invalid" >{{ getMessage() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form">
+        <mat-label>E-mail:</mat-label>
+        <input matInput [(ngModel)]="cliente.email" type="text" name="email" placeholder="Ex: EXAMPLE@HOTMAIL.COM" maxlength="100">
+
+    </mat-form-field>
+
+    <mat-form-field class="form">
+        <mat-label>Usuario:</mat-label>
+        <input matInput [(ngModel)]="cliente.usuario" [formControl]="usuario" required  type="text" name="usuario" placeholder="Ex: Lorem Ipsum" maxlength="200">
+        <mat-error *ngIf="usuario.invalid" >{{ getMessage() }}</mat-error>
+
+    </mat-form-field>
+
+    
+    <mat-form-field class="form">
+        <mat-label>Senha:</mat-label>
+        <input matInput [(ngModel)]="cliente.senha"  [type]="hide ? 'password' : 'text'" name="senha" >
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+    
+    <mat-form-field class="form">
+        <mat-label>Informações Adicionais:</mat-label>
+        <textarea matInput [(ngModel)]="cliente.infoAdicionais" [formControl]="infoAdicionais" required type="text" name="infoAdicionais" placeholder="Ex: Lorem Ipsum" maxlength="2000000"></textarea>
+        <mat-error *ngIf="infoAdicionais.invalid" >{{ getMessage() }}</mat-error>  <!--ele apresenta uma mensagem no input-->
+
+    </mat-form-field>
+
+    <mat-form-field class="form">
+        <mat-label>Telefone:</mat-label>
+        <input matInput [(ngModel)]="cliente.telefone"  type="text" name="telefone" placeholder="(99) 9999-9999" maxlength="20">
+    </mat-form-field>
+
+    <mat-form-field class="form">
+        <mat-label>Celular:</mat-label>
+        <input matInput [(ngModel)]="cliente.celular"  type="text" name="celular" placeholder="(99) 9999-9999" maxlength="20"/>
+    </mat-form-field>
+
+    <div class="buttons">
+        <button (click)="create()" [disabled]="getMessage()" class="mat-elevation-z8" mat-stroked-button color="primary"> CRIAR </button>
+        <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+        <button (click)="cancel()" class="mat-elevation-z8" mat-stroked-button color="warn"> CANCELAR </button>
+
+    </div>
+</form>

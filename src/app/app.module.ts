@@ -22,6 +22,8 @@ import { LoginComponent } from './components/views/login/login.component';
 import { NavComponent } from './components/templates/nav/nav.component';
 import { TelaLoginComponent } from './components/views/tela-login/tela-login.component';
 import { ClienteComponent } from './components/views/cliente/cliente.component';
+import { ClienteCreateComponent } from './components/views/cliente/cliente-create/cliente-create.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { ClienteComponent } from './components/views/cliente/cliente.component';
     LoginComponent,
     NavComponent,
     TelaLoginComponent,
-    ClienteComponent
+    ClienteComponent,
+    ClienteCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -50,8 +53,8 @@ import { ClienteComponent } from './components/views/cliente/cliente.component';
     MatInputModule,
     MatFormFieldModule,
     MatSnackBarModule,
-    ReactiveFormsModule //imports 
-
+    ReactiveFormsModule,
+    MatDatepickerModule //imports 
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -19,6 +19,11 @@ export class NutricionistaService {
     return this.http.get<Nutricionista[]>(url)
   } // 'https://bookstore-api-patryck.herokuapp.com/categorias'
 
+  findById(codigo : number): Observable<Nutricionista>{
+    const url = `${this.baseUrl}/nutricionistas/${codigo}`
+    return this.http.get<Nutricionista>(url)
+  }
+
   mensagem(str : String): void{
     this._snack.open(`${str}`, 'OK', {
       horizontalPosition: 'end',

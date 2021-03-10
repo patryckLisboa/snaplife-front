@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ClienteCreateComponent } from './components/views/cliente/cliente-create/cliente-create.component';
 import { ClienteComponent } from './components/views/cliente/cliente.component';
 import { HomeComponent } from './components/views/home/home.component'
 import { LoginComponent } from './components/views/login/login.component';
@@ -22,8 +23,12 @@ const routes: Routes = [
     component: TelaLoginComponent
   },
   {
-    path: 'cliente',
+    path: 'nutricionista/:id/clientes',
     component: ClienteComponent
+  },
+  {
+    path: 'nutricionista/:id/clientes/create',
+    component: ClienteCreateComponent
   }
 
 ];

@@ -6,5 +6,5 @@ export interface Nutricionista {
     email?: String,
     telefone?: String,
     celular?: String, 
-    codigo?: String
+    codigo?: number
 }
