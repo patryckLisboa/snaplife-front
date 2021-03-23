@@ -13,3 +13,29 @@ h1{
     color: white;
 }
 
+mat-icon{
+    font-size: 1.5rem;
+    color: white;
+    vertical-align: -40%;
+    width: 100%;
+    
+}
+
+button{
+    background-color:rgb(1, 163, 60) ;
+    height: 70%;
+    margin: 1% auto 1% 10%;
+    display: none;
+}
+
+@media(max-width: 450px){
+    button{
+        display: inline-block;
+    }
+}
+
+@media(max-width: 770px){
+    button{
+        display: inline-block;
+    }
+}

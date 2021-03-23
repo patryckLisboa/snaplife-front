@@ -36,6 +36,11 @@ export class TelaLoginComponent implements OnInit {
       this.nutricionistas = resposta;
     });
   }
+  onkeypress(event: any) {
+    if (event.keyCode === 13) {
+      this.navegarParaCategoriaClientes();
+    }
+  }
 
   navegarParaCategoriaClientes(){
     this.nutricionistas.forEach((nut) =>{

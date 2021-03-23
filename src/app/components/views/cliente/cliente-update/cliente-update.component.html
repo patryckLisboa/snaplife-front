@@ -1,5 +1,5 @@
 <form>
-    <h1>CRIANDO UM NOVO CLIENTE</h1>
+    <h1>ATUALIZANDO UM CLIENTE</h1>
     
     <mat-form-field class="form">
         <mat-label>Nome completo:</mat-label>
@@ -12,9 +12,8 @@
         <input matInput disabled [(ngModel)]="cliente.dataNascimento" required [ngModelOptions]="{standalone: true}" [matDatepicker]="picker" >
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker disabled="false"></mat-datepicker>
-        
     </mat-form-field>
-
+    
     <mat-form-field class="form">
         <mat-label>E-mail:</mat-label>
         <input matInput [(ngModel)]="cliente.email" [formControl]="email" required type="text" name="email" placeholder="Ex: EXAMPLE@HOTMAIL.COM" maxlength="100">
@@ -40,13 +39,12 @@
 
     <mat-form-field class="form">
         <mat-label>Confirmar senha:</mat-label>
-        <input matInput [(ngModel)]="senhaConfirm" [formControl]="senhaConfirma" required [type]="hide2 ? 'password' : 'text'" name="senhaConfirm" placeholder="*********" maxlength="11">
+        <input matInput [(ngModel)]="senhaConfirm" [formControl]="senhaConfirma"  [type]="hide2 ? 'password' : 'text'" name="senhaConfirm" placeholder="*********" maxlength="11">
         <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide2 password'" [attr.aria-pressed]="hide2">
             <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error *ngIf="senhaConfirma.invalid" >{{ getMessage() }}</mat-error>
     </mat-form-field>
-
 
     <mat-form-field class="form">
         <mat-label>Telefone:</mat-label>
@@ -71,12 +69,9 @@
         <input matInput type="text" disabled>
         <mat-checkbox [(ngModel)]="cliente.ativo" [ngModelOptions]="{standalone: true}"></mat-checkbox>
     </mat-form-field>
-    
-       
-
 
     <div class="buttons">
-        <button (click)="create()"   [disabled]="getMessage()" class="mat-elevation-z8" mat-stroked-button color="primary"> CRIAR </button>
+        <button (click)="update()"   [disabled]="getMessage()" class="mat-elevation-z8" mat-stroked-button color="primary"> ATUALIZAR </button>
         <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
         <button (click)="cancel()" class="mat-elevation-z8" mat-stroked-button color="warn"> CANCELAR </button>
 

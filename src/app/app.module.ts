@@ -13,9 +13,11 @@ import {MatIconModule} from '@angular/material/icon';
 import { HomeComponent } from './components/views/home/home.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 import {MatButtonModule} from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
+import {MatInputModule} from  '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { LoginComponent } from './components/views/login/login.component';
@@ -24,6 +26,13 @@ import { TelaLoginComponent } from './components/views/tela-login/tela-login.com
 import { ClienteComponent } from './components/views/cliente/cliente.component';
 import { ClienteCreateComponent } from './components/views/cliente/cliente-create/cliente-create.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { ClienteDeleteComponent } from './components/views/cliente/cliente-delete/cliente-delete.component';
+import { ClienteUpdateComponent } from './components/views/cliente/cliente-update/cliente-update.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ConsultaReadComponent } from './components/views/consulta/consulta-read/consulta-read.component';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -35,7 +44,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     NavComponent,
     TelaLoginComponent,
     ClienteComponent,
-    ClienteCreateComponent
+    ClienteCreateComponent,
+    ClienteDeleteComponent,
+    ClienteUpdateComponent,
+    ConsultaReadComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,9 +66,18 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatFormFieldModule,
     MatSnackBarModule,
     ReactiveFormsModule,
-    MatDatepickerModule //imports 
+    MatDatepickerModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressBarModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatNativeDateModule //imports 
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

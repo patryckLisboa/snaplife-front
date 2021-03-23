@@ -40,7 +40,7 @@ export class ClienteService {
     this._snack.open(`${str}`, 'OK', {
       horizontalPosition: 'end',
       verticalPosition: 'top',
-      duration: 10000
+      duration: 3000
     })
   }
 }

@@ -1,0 +1,25 @@
+<form>
+    <h1>DELETANDO UM CLIENTE</h1>
+    
+    <mat-form-field class="form">
+        <mat-label>Nome completo:</mat-label>
+        <input matInput [(ngModel)]="cliente.nomeCompleto" type="text" name="nomeCompleto" disabled>
+    </mat-form-field>
+
+    <mat-form-field class="form">
+        <mat-label>E-mail:</mat-label>
+        <input matInput [(ngModel)]="cliente.email" type="text" name="email" disabled>
+    </mat-form-field>
+
+    <mat-form-field class="form">
+        <mat-label>Usuario:</mat-label>
+        <input matInput [(ngModel)]="cliente.usuario" type="text" name="usuario" disabled>
+    </mat-form-field>
+
+    <div class="buttons">
+        <button (click)="delete()" class="mat-elevation-z8" mat-stroked-button color="primary"> DELETAR </button>
+        <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+        <button (click)="cancel()" class="mat-elevation-z8" mat-stroked-button color="warn"> CANCELAR </button>
+
+    </div>
+</form>

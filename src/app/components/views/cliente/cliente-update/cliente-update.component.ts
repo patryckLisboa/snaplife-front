@@ -6,14 +6,13 @@ import { Cliente } from '../cliente.model';
 import { ClienteService } from '../cliente.service';
 
 @Component({
-  selector: 'app-cliente-create',
-  templateUrl: './cliente-create.component.html',
-  styleUrls: ['./cliente-create.component.css']
+  selector: 'app-cliente-update',
+  templateUrl: './cliente-update.component.html',
+  styleUrls: ['./cliente-update.component.css']
 })
-export class ClienteCreateComponent implements OnInit {
+export class ClienteUpdateComponent implements OnInit {
   hide = true;
   hide2 = true;
-  
   id_nut: number = 0
   cliente: Cliente = {
     senha: '',
@@ -25,10 +24,9 @@ export class ClienteCreateComponent implements OnInit {
     codigo: 0,
     dataNascimento: new Date('2014-25-23'),
     infoAdicionais: '',
-    ativo: false,
+    ativo: true,
     nutricionista: {}
   }
-
 
   senhaConfirm = ''
   usuario = new FormControl('', [Validators.minLength(3)])
@@ -44,38 +42,41 @@ export class ClienteCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_nut = parseInt(this.route.snapshot.paramMap.get('id')!) // essa variavel foi a que setamos no app-routing.modules.ts
-  
-    
+    this.cliente.codigo = parseInt(this.route.snapshot.paramMap.get('id_cli')!) // essa tambem
+    this.findById();
+
   }
   
+  findById() : void{
+    this.service.findById(this.cliente.codigo!).subscribe((resposta) => {
+      this.cliente = resposta
+      console.log(this.cliente)
+      
+    })
+  }
+
   onkeypress(event: any) {
     if (event.keyCode === 13) {
-      this.create();
+      this.update();
     }
   }
   
-
-  create(): void {
-    if (this.senhaConfirm === this.cliente.senha){
-     
-      this.service.create(this.cliente, this.id_nut).subscribe((resposta) =>{
-      
+  update() : void{
+    
+    
+      this.service.update(this.cliente).subscribe((resposta) =>{ 
         this.router.navigate([`nutricionista/${this.id_nut}/clientes`])
-        this.service.mensagem('Cliente criado com sucesso!')
+        this.service.mensagem("Cliente atualizado com sucesso!")
         console.log(resposta)
         console.log(this.cliente)
       }, err => {
+        this.service.mensagem("Erro ao atualizar cliente. Tente mais tarde!")
         for (let i = 0; i < err.error.errors.length; i++){
           this.service.mensagem(err.error.errors[i].message)
         }
-
-        console.log(err.errors.erro)
         console.log(this.cliente)
-
-      } );
-    }else{
-      this.service.mensagem('Campo confirmação de senha com valor diferente da senha')
-    }
+      })
+ 
   }
 
   cancel(): void {

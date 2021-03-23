@@ -21,3 +21,17 @@ mat-icon{
 button{
     background-color:rgb(0, 135, 49) ;
 }
+
+
+
+@media(max-width: 450px){
+    .navegacao{
+        display: none;
+    }
+}
+
+@media(max-width: 770px){
+    .navegacao{
+        display: none;
+    }
+}

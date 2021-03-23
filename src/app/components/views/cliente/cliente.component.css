@@ -1,6 +1,6 @@
 .content{
     width: 90%;
-    margin: 1.4rem auto auto auto;
+    margin: .5rem auto .1rem auto;
 
 }
 
@@ -10,10 +10,10 @@
 }
 
 button{
-    margin-bottom: .8rem;
+    margin-bottom: 0px;
 }
 
-.title h1{
+.title h3{
     font-size: 2rem;
     color: rgb(97, 97, 97);
     font-weight: 500;
@@ -23,10 +23,18 @@ button{
     width: 100%;
     
 }
+
+i{
+    text-align: center;
+}
+  
+
 .edit{
     color: rgb(255, 251, 0);
 }
-
+a{
+    text-decoration: none;
+}
 .delete{
     color: rgb(255, 73, 73);
     margin-left: .6rem;
@@ -34,4 +42,18 @@ button{
 
 .mat-header{
     width: 5rem;
+    text-align: center;
 }
+
+#linha:hover {
+    background: rgba(0, 135, 49, 0.097);
+  }
+
+@media(max-width: 450px){
+    .content{
+        width: 100%;
+        
+    
+    }
+}
+
