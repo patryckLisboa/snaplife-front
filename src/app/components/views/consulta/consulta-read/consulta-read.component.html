@@ -1,1 +1,336 @@
-<p>consulta-read works!</p>
+<button (click)="cancel()"  class="mat-elevation-z15" style="display: block; justify-content: center; margin: 1rem auto 1rem auto;" mat-stroked-button color="warn"> CANCELAR </button>
+<mat-card class="home mat-elevation-z4 cartao"> 
+    <mat-card-title>
+        <div class="login">
+        
+          <mat-icon class="person">person</mat-icon>
+          <mat-form-field class="identificacao">
+            <mat-label >id</mat-label>
+            <input [(ngModel)]="cliente.codigo" matInput disabled>
+          </mat-form-field>
+          <mat-form-field class="identificacao">
+            <mat-label >usuario</mat-label>
+            <input [(ngModel)]="cliente.nomeCompleto"  matInput disabled>
+          </mat-form-field>
+          <mat-form-field class="identificacao">
+            <mat-label >senha</mat-label>
+            <input [(ngModel)]="cliente.senha"  matInput disabled>
+          </mat-form-field>
+          <mat-form-field class="identificacao" >
+            <mat-label >Login</mat-label>
+            <input [(ngModel)]="cliente.usuario" matInput disabled>
+          </mat-form-field>
+          <mat-form-field class="identificacao">
+            <mat-label >data de nascimento</mat-label>
+            <input [(ngModel)]="cliente.dataNascimento" matInput disabled>
+          </mat-form-field>
+
+          <mat-nav-list style="color:rgb(0, 135, 49) ; text-align: center;">
+            <h1>Consulta > Anamnese</h1> 
+
+            <div class="progress-bar" name="loading" [ngClass]="inProgress ? 'in-progress' : ''"></div>
+
+
+            <h1>{{consulta.dataConsulta}}</h1>
+            <button  [disabled]="desabilitaEsquerda()" (click)="setaEsquerda()" mat-mini-fab aria-label="Example icon button with a home icon" style="background-color: rgb(0, 135, 49);">
+              <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <h1 style="display: inline; margin: 2%;">{{indexConsulta}}</h1>
+            <button  [disabled]="desabilitaDireita()" (click)="setaDireita()" mat-mini-fab aria-label="Example icon button with a home icon" style="background-color: rgb(0, 135, 49);">
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+          </mat-nav-list>
+          <div class="buttons" style="padding-top: 3% ;">
+            <button  class="mat-elevation-z15" mat-stroked-button color="primary" style="margin-right: 3%;"> NOVA CONSULTA </button>
+            <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+            <button  class="mat-elevation-z15"  mat-stroked-button color="warn"> EXCLUIR CONSULTA </button>
+          </div>
+
+          <mat-card class="home mat-elevation-z15 cartao">
+            <mat-card-title>
+              <h3>Dados Antopométricos</h3>
+              <mat-form-field class="campoLogin">
+                <h2>Histórico social e familiar</h2>
+                <mat-label ></mat-label>
+                <textarea [(ngModel)]="consulta.historicoSocialFamiliar" matInput type="text" placeholder="Ex: Lorem Ipsum" maxlength="2000"></textarea>
+              </mat-form-field>
+
+              <mat-form-field class="dados"  appearance="fill">
+                <mat-label >Peso:</mat-label>
+                <input [(ngModel)]="consulta.peso"  matInput>
+              </mat-form-field>
+              <mat-form-field class="dados" appearance="fill">
+                <mat-label >Altura:</mat-label>
+                <input [(ngModel)]="consulta.altura" matInput>
+              </mat-form-field>
+              <mat-form-field class="dados" appearance="fill">
+                <mat-label >Idade:</mat-label>
+                <input [(ngModel)]="consulta.idade" matInput>
+              </mat-form-field>
+              <mat-form-field class="dados" appearance="fill">
+                <mat-label >Sexo (m/f):</mat-label>
+                <input [(ngModel)]="consulta.sexo" matInput>
+              </mat-form-field>
+              <mat-form-field class="dados"  appearance="fill">
+                <mat-label >Taxa MB:</mat-label>
+                <input [(ngModel)]="consulta.taxaMB" matInput>
+              </mat-form-field>
+              <mat-form-field class="dados"  appearance="fill">
+                <mat-label >Gasto ET:</mat-label>
+                <input [(ngModel)]="consulta.gastoEnergTot" matInput>
+              </mat-form-field>
+              <mat-form-field class="dados"  appearance="fill">
+                <mat-label >Tipo Físico:</mat-label>
+                <input [(ngModel)]="consulta.estadoCorporal" matInput>
+              </mat-form-field>
+              <mat-form-field class="dados"  appearance="fill">
+                <mat-label >Fator atividade:</mat-label>
+                <input [(ngModel)]="consulta.fatorAtividade" matInput>
+              </mat-form-field>
+
+              
+              <mat-form-field class="campoLogin" appearance="fill">
+                <h4>Diagnóstico:</h4>
+                <mat-label ></mat-label>
+                <textarea [(ngModel)]="consulta.diagnostico" matInput type="text" placeholder="Ex: Lorem Ipsum" maxlength="2000"></textarea>
+              </mat-form-field>
+
+            </mat-card-title>
+            <div class="buttons" style="padding-top: 3% ;">
+              <button  (click)="retornarObj()" class="mat-elevation-z15" mat-stroked-button color="primary" style="margin-right: 3%;"> GRAVAR ALTERAÇÕES </button>
+              <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+      
+            </div>
+  
+          </mat-card>
+
+
+          <mat-card class="home mat-elevation-z15 cartao" style="background-color: rgb(230, 230, 230);">
+            <mat-card-header  style="display: block;justify-content: center;">
+              <mat-nav-list  style="color:rgb(0, 135, 49) ; text-align: center; margin-bottom: 20px;">
+                <h3>Prescrição Dietética</h3> 
+    
+                <button  [disabled]="desabilitaEsquerda()" (click)="setaEsquerda()" mat-mini-fab aria-label="Example icon button with a home icon" style="background-color: rgb(0, 135, 49);">
+                  <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+                <h1 style="display: inline; margin: 2%;">{{indexConsulta}}</h1>
+                <button  [disabled]="desabilitaDireita()" (click)="setaDireita()" mat-mini-fab aria-label="Example icon button with a home icon" style="background-color: rgb(0, 135, 49);">
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+              </mat-nav-list>
+              <div class="buttons" style="padding-bottom: 3% ;">
+                <button  class="mat-elevation-z15" mat-stroked-button color="primary" style="margin-right: 3%;"> NOVA PRESCRIÇÃO </button>
+                <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+                <button  class="mat-elevation-z15"  mat-stroked-button color="warn"> EXCLUIR PRESCRIÇÃO </button>
+              </div>
+            </mat-card-header>
+            
+
+
+            <mat-card  class="mat-elevation-z6" style="margin-bottom: 10px;  color:rgb(0, 135, 49)">
+              <div class="grid-container">
+                <div class="item1">
+                  <h3>Oferta:</h3>
+                  <mat-form-field class="dados"  appearance="fill">
+                    <mat-label >Valor energético oferecido:</mat-label>
+                    <input [(ngModel)]="prescricao.vetValorEnergOfertado" matInput>
+                  </mat-form-field>
+      
+                  <mat-form-field class="dados"  appearance="fill">
+                    <mat-label >Gordura oferecida:</mat-label>
+                    <input [(ngModel)]="prescricao.gorduraOfertada" matInput>
+                  </mat-form-field>
+
+                  <mat-form-field class="dados"  appearance="fill">
+                    <mat-label >Proteinas oferecidas:</mat-label>
+                    <input [(ngModel)]="prescricao.proteinasOfertadas" matInput>
+                  </mat-form-field>
+
+                  <mat-form-field class="dados"  appearance="fill">
+                    <mat-label >Carboidratos oferecidos:</mat-label>
+                    <input [(ngModel)]="prescricao.carboidratosOfertados" matInput>
+                  </mat-form-field>
+                </div>
+
+                <div class="item2" style="padding-top: 10%;">
+                  <mat-card class="mat-elevation-z6" style="margin-bottom: 10px;  color:rgb(0, 135, 49)">
+                    <h3>Objetivo: {{prescricao.objetivo}}</h3>
+                  </mat-card>
+                  
+                </div>
+              </div>
+              <div class="buttons" style="padding-top: 3% ;">
+                <button  (click)="retornarObj()" class="mat-elevation-z15" mat-stroked-button color="primary" style="margin-right: 3%;"> GRAVAR ALTERAÇÕES </button>
+                <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+        
+              </div>
+            </mat-card>
+
+
+            <div class="grid-container">
+              <div class="item1">
+                <mat-card-content style=" background-color: rgb(255, 255, 255); margin-top: 20px;  color:rgb(0, 135, 49)" class="mat-elevation-z5" >
+              
+
+
+
+                  <div class="example-container mat-elevation-z8">
+                    <div class="example-table-container">
+                  
+                      <table mat-table [dataSource]="refeicoes" class="example-table">
+                        <!-- Number Column -->
+                        <ng-container matColumnDef="refeicao">
+                          <th mat-header-cell *matHeaderCellDef>REFEIÇOES</th>
+                          <td mat-cell *matCellDef="let row">
+                            <mat-card class="mat-elevation-z6" style="margin-bottom: 10px; background-color:rgb(230, 230, 230);">
+
+                              <h3>Refeição {{row.index}}</h3>
+                              <div class="buttons" style="padding-bottom: 3% ;">
+                                <button  class="mat-elevation-z5" mat-stroked-button color="primary" style="margin-top: 3%;"> GRAVAR ALTERAÇÕES  </button>
+                              </div>
+                              <mat-form-field class="dados" >
+                                <mat-label >Tipo da refeicao:</mat-label>
+                                <input [(ngModel)]="row.tipoRefeicao" matInput>
+                              </mat-form-field>
+                              <mat-form-field class="dados" >
+                                <mat-label >Horario:</mat-label>
+                                <input [(ngModel)]="row.horario" matInput>
+                              </mat-form-field>
+                             
+
+                              <div class="grid-container">
+                                <div class="item3">
+                                  <table mat-table [dataSource]="itens" class="example-table" style=" color:rgb(0, 135, 49)">
+                                    <!-- Number Column -->
+                                    <ng-container matColumnDef="item">
+                                      <th mat-header-cell *matHeaderCellDef>ITENS</th>
+                                      <td mat-cell *matCellDef="let row">
+                                        <mat-card class="mat-elevation-z6" style="margin-bottom: 10px;  color:rgb(0, 135, 49)">
+                                          
+                                          <form style="width: 100%;" class="example-form">
+                                            <mat-form-field style="width: 100%;" class="example-full-width">
+                                              <mat-label>Alimento</mat-label>
+                                              <input #alimento type="text" matInput [formControl]="myControl" value="{{row.alimentoTaco.descricaoAlimento}}" [matAutocomplete]="auto">
+                                              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                                <mat-option *ngFor="let option of filteredOptions | async ;" [value]="option">
+                                                  {{option.descricaoAlimento}} 
+                                                </mat-option>
+                                              </mat-autocomplete>
+                                            </mat-form-field>
+                                          </form>
+                                          
+
+                                          <mat-form-field class="dados" >
+                                            <mat-label >Quantidade:</mat-label>
+                                            <input [(ngModel)]="row.quantidade" matInput>
+                                          </mat-form-field>
+                                          <div class="buttons" style="padding-bottom: 3% ;">
+                                            <button  class="mat-elevation-z5" mat-stroked-button color="primary" style="margin: auto 3% 3% auto;"> GRAVAR ALTERAÇÕES </button>
+                                            <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+                                            <button  class="mat-elevation-z5"  mat-stroked-button color="warn"> EXCLUIR ALIMENTO </button>
+                                          </div>
+                                        </mat-card>
+                                      </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                                  </table>
+                                  <button  class="mat-elevation-z5" mat-stroked-button color="primary" style="margin: 3% auto 3% auto;"> NOVO ALIMENTO </button>
+
+                                </div>
+                                <div class="item4">
+                                  <mat-card class="mat-elevation-z6" style="width: 150px; margin-bottom: 10px; color:rgb(0, 135, 49); justify-content: right; display: block;">
+                                    <h3>Total:</h3>
+                                    <mat-form-field class="dados"  appearance="fill">
+                                      <mat-label >Soma de calorias:</mat-label>
+                                      <input [(ngModel)]="prescricao.vetValorEnergOfertado" matInput disabled>
+                                    </mat-form-field>
+                         
+                                    <mat-form-field class="dados"  appearance="fill">
+                                      <mat-label >Soma de gorduras:</mat-label>
+                                      <input [(ngModel)]="prescricao.gorduraOfertada" matInput disabled>
+                                    </mat-form-field>
+                     
+                                    <mat-form-field class="dados"  appearance="fill">
+                                      <mat-label >Soma de proteinas:</mat-label>
+                                      <input [(ngModel)]="prescricao.proteinasOfertadas" matInput disabled>
+                                    </mat-form-field>
+                 
+                                    <mat-form-field class="dados"  appearance="fill">
+                                      <mat-label >Soma de carboidratos:</mat-label>
+                                      <input [(ngModel)]="prescricao.carboidratosOfertados" matInput disabled>
+                                    </mat-form-field>
+                                  </mat-card>
+                                
+                                </div>
+                              </div>
+                              <button  class="mat-elevation-z5"  mat-stroked-button color="warn"> EXCLUIR REFEIÇÃO </button>
+
+
+                            </mat-card>
+
+                          </td>
+                          
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                      <div class="buttons" style="padding-bottom: 3% ;">
+                        <button  class="mat-elevation-z5" mat-stroked-button color="primary" style="margin-top: 3%;"> NOVA REFEIÇÃO </button>
+                        <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+                       
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+                </mat-card-content>
+              </div>
+              <div class="item2">
+                <mat-card-actions style="display: inline">
+
+                  <mat-card class="mat-elevation-z6" style="margin-bottom: 10px; width: 200px ; justify-content: right; display: block;  color:rgb(0, 135, 49)">
+                    <h3>Total:</h3>
+                    <mat-form-field class="dados"  appearance="fill">
+                      <mat-label >Soma de calorias:</mat-label>
+                      <input [(ngModel)]="prescricao.vetValorEnergOfertado" matInput disabled>
+                    </mat-form-field>
+         
+                    <mat-form-field class="dados"  appearance="fill">
+                      <mat-label >Soma de gorduras:</mat-label>
+                      <input [(ngModel)]="prescricao.gorduraOfertada" matInput disabled>
+                    </mat-form-field>
+     
+                    <mat-form-field class="dados"  appearance="fill">
+                      <mat-label >Soma de proteinas:</mat-label>
+                      <input [(ngModel)]="prescricao.proteinasOfertadas" matInput disabled>
+                    </mat-form-field>
+ 
+                    <mat-form-field class="dados"  appearance="fill">
+                      <mat-label >Soma de carboidratos:</mat-label>
+                      <input [(ngModel)]="prescricao.carboidratosOfertados" matInput disabled>
+                    </mat-form-field>
+                  </mat-card>
+                
+                </mat-card-actions>
+              </div>
+            </div>
+          </mat-card>
+
+        
+        </div>
+        <!--
+        <tr mat-header-row *matHeaderRowDef="id"></tr>
+        <tr mat-row *matRowDef="let id"></tr>
+        -->
+    </mat-card-title>
+</mat-card>
+
+
+
+
+

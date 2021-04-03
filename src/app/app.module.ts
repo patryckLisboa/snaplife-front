@@ -33,6 +33,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ConsultaReadComponent } from './components/views/consulta/consulta-read/consulta-read.component';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatNativeDateModule //imports 
+    MatNativeDateModule,
+    MatAutocompleteModule //imports 
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}

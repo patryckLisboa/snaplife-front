@@ -1,14 +1,14 @@
-import { Component, OnInit, Injectable, ViewChild, AfterViewInit, SystemJsNgModuleLoader } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MatPaginator} from '@angular/material/paginator';
 import { Nutricionista } from '../tela-login/nutricionista.model';
 import { NutricionistaService } from '../tela-login/nutricionista.service';
 import { Cliente } from './cliente.model';
 import { ClienteService } from './cliente.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { DataSource } from '@angular/cdk/collections';
-import { ThisReceiver } from '@angular/compiler';
+
+
 
 export interface UserData {
   senha?: String,
@@ -94,8 +94,8 @@ export class ClienteComponent implements OnInit, AfterViewInit{
       this.dataSource = new MatTableDataSource(this.clientes);
       this.dataSource.paginator = this.paginator!
       this.dataSource.sort = this.sort!
-      
     })
+
   }
 
   navegarParaCriarCliente(): void {

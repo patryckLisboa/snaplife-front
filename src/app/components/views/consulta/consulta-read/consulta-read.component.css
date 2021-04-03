@@ -1,0 +1,179 @@
+h2{
+    display: inline;
+    
+}
+
+.person{
+    
+    display: inline;
+    margin: auto 1rem auto auto;
+}
+
+.mat-form-field-infix{
+    display: inline;
+   
+}
+
+.identificacao{
+    font-size: 1rem;
+    width: 19%;
+    
+}
+
+.dados{
+    font-size: .8rem;
+    width: 100px;
+    margin: .5rem;
+}
+
+label{
+    text-align: center;
+    display: block;
+    margin-top: 10%;
+}
+
+a{
+    text-decoration: none;
+    
+}
+
+mat-card-title{
+    color:rgb(0, 135, 49) ;
+
+}
+
+.login{
+    text-align: center;
+}
+
+.cartao{
+   
+    margin: 2% 5% auto 5%;
+}
+
+.senha{
+    font-size: .8rem;
+    display: block;
+}
+
+.campoLogin{
+    
+        font-size: .8rem;
+        display: block;
+    
+}
+
+
+
+
+
+
+
+.progress-bar.in-progress {
+    background: #b3d9ff;
+    padding: .25rem;
+    position: relative;
+}
+.progress-bar.in-progress::after {
+    animation: fetching 2s cubic-bezier(1, 1, .75, 1) infinite;
+    background: #4da6ff;
+    content: '';
+    padding: .25rem;
+    position: absolute;
+    width: 33%;
+}
+
+@keyframes fetching {
+    0% {
+        left: 0px;
+    }
+    100% {
+        left: 65%;
+    }
+}
+
+
+
+
+.item1 { grid-area: menu; }
+.item2 { grid-area: right;}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      'menu menu right';
+    grid-gap: 10px;
+
+  }
+
+
+.item3 { grid-area: menu; }
+.item4 { grid-area: right;}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      'menu menu right';
+    grid-gap: 10px;
+
+  }
+
+
+  
+.item5 { grid-area: menu;}
+.item6 { grid-area: right;}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      'menu menu right';
+    grid-gap: 10px;
+
+  }
+
+
+
+
+  .example-container {
+    position: relative;
+    min-height: 200px;
+  }
+  
+  .example-table-container {
+    position: relative;
+    height: 400px;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  .example-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-rate-limit-reached {
+    color: #980000;
+    max-width: 360px;
+    text-align: center;
+  }
+  
+  /* Column Widths */
+  .mat-column-number,
+  .mat-column-state {
+    max-width: 64px;
+  }
+  
+  .mat-column-created {
+    max-width: 124px;
+  }
