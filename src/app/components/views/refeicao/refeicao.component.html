@@ -1,0 +1,110 @@
+<div style="height: 40 rem; width: 500px;" >
+    <div class="buttons" style="display: block; text-align: right;">
+      <button  class="mat-elevation-z15" (click)="cancel()"  mat-stroked-button color="warn"> FECHAR </button>
+      <br><br>
+    </div>
+
+             
+  <mat-card-title >
+
+    <mat-card-content style=" background-color: rgb(255, 255, 255); margin-top: 20px;  color:rgb(0, 135, 49)" class="mat-elevation-z5" >
+        <div class="example-container mat-elevation-z8">
+          <div class="example-table-container">
+        
+            <table mat-table [dataSource]="refeicoes" class="example-table">
+              <!-- Number Column -->
+              <ng-container matColumnDef="refeicao">
+                <th mat-header-cell *matHeaderCellDef>REFEIÇOES</th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-card class="mat-elevation-z6" style="margin-bottom: 10px; background-color:rgb(230, 230, 230);">
+
+                    <h3>Refeição {{row.index}}</h3>
+                    <div class="buttons" style="padding-bottom: 3% ;">
+                      <button  class="mat-elevation-z5" (click)="update(row)" mat-stroked-button color="primary" style="margin-top: 3%;"> GRAVAR ALTERAÇÕES  </button>
+                    </div>
+                    <mat-form-field class="dados" >
+                      <mat-label >Tipo da refeicao:</mat-label>
+                      <input [(ngModel)]="row.tipoRefeicao" matInput>
+                    </mat-form-field>
+                    <mat-form-field class="dados" >
+                      <mat-label >Horario:</mat-label>
+                      <input [(ngModel)]="row.horario" matInput>
+                    </mat-form-field>
+                   
+
+                    
+                    <button  class="mat-elevation-z5" (click)="delete(row)"  mat-stroked-button color="warn"> EXCLUIR REFEIÇÃO </button>
+                    
+                    <mat-accordion>
+                    <mat-expansion-panel hideToggle >
+                      <mat-expansion-panel-header (click)="itens(row)">
+   
+                        <mat-panel-description>
+                          <mat-icon>keyboard_arrow_down</mat-icon> ALIMENTOS
+
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      
+                      <table mat-table [dataSource]="itensArray" class="example-table" style=" color:rgb(0, 135, 49)">
+                        <!-- Number Column -->
+                        <ng-container matColumnDef="item">
+                          <th mat-header-cell *matHeaderCellDef>ITENS</th>
+                          <td mat-cell *matCellDef="let row2">
+                            <mat-card class="mat-elevation-z6" style="margin-bottom: 10px;  color:rgb(0, 135, 49)">
+                              
+                                <mat-form-field (click)="mudarAlimento(row2)" >
+                                  <mat-label>Alimento (clique para alterar)</mat-label>
+                                  <input style="cursor: pointer" appearance="fill" disabled matInput [(ngModel)]="row2.alimentoTaco.descricaoAlimento">
+                                  
+                                </mat-form-field>
+                        
+
+                                <mat-form-field>
+                                  <mat-label > Quantidade:</mat-label>
+                                  <input appearance="fill" style="margin-left: 5%;" [(ngModel)]="row2.quantidade" matInput>
+                                </mat-form-field>
+
+                              <div class="buttons" style="padding-bottom: 3% ;">
+                                <button  class="mat-elevation-z5" mat-stroked-button color="primary" (click)="itensUpdate(row2,row)" style="margin: auto 3% 3% auto;"> GRAVAR ALTERAÇÕES </button>
+                                <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+                                <button  class="mat-elevation-z5"  mat-stroked-button color="warn" (click)="excluirItem(row2,row)"> EXCLUIR ALIMENTO </button>
+                              </div>
+                            </mat-card>
+                          </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                        <tr mat-row *matRowDef="let row2; columns: displayedColumns2;"></tr>
+                      </table>
+                      <br>
+                      <button (click)="itensCreate(row)" mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+                        <mat-icon>plus_one</mat-icon>
+                      </button>
+                    </mat-expansion-panel>
+                    </mat-accordion>
+                  </mat-card>
+
+                </td>
+                
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div class="buttons" style="padding-bottom: 3% ;">
+              <button  class="mat-elevation-z5" (click)="create()" mat-stroked-button color="primary" style="margin-top: 3%;"> NOVA REFEIÇÃO </button>
+              <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+             
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+      </mat-card-content>
+
+  </mat-card-title>
+
+  
+</div> 

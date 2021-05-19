@@ -1,19 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, Inject, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Consulta } from '../consulta.model';
 import { ClienteService } from '../../cliente/cliente.service';
 import { ConsultaService } from '../consulta.service';
 import { Nutricionista } from '../../tela-login/nutricionista.model';
-import { Cliente } from '../../cliente/cliente.model';
-import { PrescricaoService } from '../prescricao.service';
-import { PrescricaoDietetica } from '../prescricao.model';
-import { RefeicaoService } from '../refeicao.service';
-import { Refeicao } from '../refeicao.model';
-import { ItemService } from '../item.service';
-import { AlimentoService } from '../alimento.service';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, catchError, startWith } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ConsultaCreateComponent } from '../consulta-create/consulta-create.component';
+import { RefeicaoComponent } from '../../refeicao/refeicao.component';
+import { SomaNutriente } from '../../refeicao/soma-nutriente.module';
+import { RefeicaoService } from '../../refeicao/refeicao.service';
+import { ItensService } from '../../refeicao/itens.service';
+import { Item } from '../../refeicao/itens.model';
 
 export interface ClienteData {
   senha?: String,
@@ -27,10 +24,20 @@ export interface ClienteData {
   infoAdicionais?: String,
   ativo?: Boolean,
   nutricionista?: Nutricionista
+  consultas?: ConsultaData[]
 }
-
-export interface ConsultaData {
+export interface RefeicaoData  {
   codigo?: Number,
+  tipoRefeicao?: String,
+  horario?: String,
+  index?: number
+  somaCalorias?: number,
+  somaGorduras?: number,
+  somaCarboidratos?: number,
+  somaProteinas?: number,
+}
+export interface ConsultaData {
+  codigo?: number,
   dataConsulta?: Date,
   historicoSocialFamiliar?: String,
   peso?: Number,
@@ -42,69 +49,13 @@ export interface ConsultaData {
   taxaMB?: Number,
   diagnostico?: String,
   gastoEnergTot?: number,
-  cliente?: Cliente,
-  index?: number
-}
-
-export interface PrescricaoData  {
-  codigo?: Number,
-  objetivo?: String,
-  gorduraOfertada?: Number,
-  carboidratosOfertados?: Number,
-  proteinasOfertadas?: Number,
-  anotacao?: String,
-  vetValorEnergOfertado?: Number, 
-  consulta?: Consulta,
-}
-
-export interface RefeicaoData  {
-  codigo?: Number,
-  tipoRefeicao?: String,
-  horario?: String,
-  prescricaoDietetica?: PrescricaoDietetica,
-  index?: number
-}
-
-export interface ItemData  {
-  codigo?: Number,
-  quantidade?: Number,
-  alimentoTaco?: AlimentoTacoData,
-  refeicao?: Refeicao,
-  index?: number
-}
-
-export interface AlimentoTacoData  {
-  id?: String,
-  categoria?: String,
-  numeroAlimento?: String,
-  descricaoAlimento?: string,
-  unidade?: String,
-  energiaKcal?: String,
-  energiaKj?: String,
-  proteina?: String,
-  lipideos?: String,
-  colesterol?: String,
-  carboidrato?: String,
-  fibraAlimentar?: String,
-  cinzas?: String,
-  calcio?: String,
-  magnesio?: String,
-  fosforo?: String,
-  ferro?: String,
-  sodio?: String,
-  potassio?: String,
-  cobre?: String,
-  zinco?: String,
-  retinol?: String,
-  re?: String,
-  rae?: String,
-  tiamina?: String,
-  riboflavina?: String,
-  piridoxina?: String,
-  niacina?: String,
-  vitamin?: String,
-  created_at?: String,
-  updated_at?: String,   
+  prescricao?: String,
+  cliente?: ClienteData,
+  index?: number,
+  carboidratosOfertados?: number,
+  proteinasOfertadas?: number,
+  gorduraOfertada?: number,
+  vetValorEnergOfertado?: number
 }
 
 @Component({
@@ -117,88 +68,118 @@ export class ConsultaReadComponent implements OnInit {
   id_nut: number = 0;
   id_cli: number = 0;
   id_con: Number = 0;
-  id_pres: Number = 0;
-  id_ref: Number = 0;
-  id_item: Number = 0;
   cliente: ClienteData = {};
   consultas: ConsultaData[] = []; 
   consulta: ConsultaData = {};
-  prescricoes: PrescricaoData[] = [];
-  prescricao: PrescricaoData = {}; 
-  refeicoes: RefeicaoData[] = [];
-  refeicao: RefeicaoData = {}; 
-  itens: ItemData[] = [];
-  item: ItemData = {}; 
-  alimentos: AlimentoTacoData[] = [];
-
-
-  displayedColumns: string[] = ['refeicao'];
-  displayedColumns2: string[] = ['item'];
-
-  myControl = new FormControl();
-  filteredOptions!: Observable<AlimentoTacoData[]>
-
-
+  refeiçoesData: RefeicaoData[] = [];
+  refeiçao: RefeicaoData = {};
+  cont: number = 0;
   indexConsulta: number = 0;
-  indexPrescricao: number = 0;
   indexrefeicao: number = 0;
-  indexItem: number = 0;
   indexRefeicao2: number =0;
   inProgress = false
-  html_string = "";
-  temp: string = "";
-  temp2: string = "";
-  @ViewChild("alimento") alimento: any; 
+  totalCalorias:number = 0;
+  totalGorduras:number = 0;
+  totalCarboidratos:number = 0;
+  totalProteinas:number = 0;
 
   constructor(
     private serviceCliente: ClienteService, 
     private serviceConsulta: ConsultaService,
-    private servicePrescricao: PrescricaoService,
     private serviceRefeicao: RefeicaoService,
-    private serviceItem: ItemService,
-    private serviceAlimento: AlimentoService,
+    private serviceItem: ItensService,
     private route: ActivatedRoute, 
     private router: Router,
+    public dialog: MatDialog,
     ) { } 
   
   ngOnInit(): void {
-    this.serviceAlimento.findAll().subscribe((resposta)=>{
-      this.alimentos = resposta;
-      this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => typeof value === 'string' ? value : value.descricaoAlimento),
-        map(descricaoAlimento => descricaoAlimento ? this._filter(descricaoAlimento) : resposta.slice())
-      );
-      
-      console.log(this.html_string)
-      //this.temp = this.alimento.nativeElement.value;
-      console.log(this.temp)
-
+    this.id_cli = parseInt(this.route.snapshot.paramMap.get('id_cli')!);
+    this.id_nut = parseInt(this.route.snapshot.paramMap.get('id')!);
+    this.serviceConsulta.findAllByCliente(this.id_cli!).subscribe( resposta => {
+      this.consultas = resposta;
+      if(this.consultas.length == 0){
+        this.createDialog();
+      }else{
+        this.findAll()
+        this.findById()
+      }
     })
-    
-    this.findAll()
-    this.findById()
   }
 
-  displayFn(alimento: AlimentoTacoData): string {
+  somasTotais(){
 
+    this.serviceRefeicao.findAllByConsulta(this.id_con!).subscribe( resposta =>{
+      resposta.forEach(refeicao => {
+        this.serviceItem.findAllByRefeicao(refeicao.codigo!).subscribe( itens =>{
+          console.log(this.somaPorItemEnergia(itens))
+        })
+      }); 
+    })
 
-    return alimento && alimento.descricaoAlimento ? alimento.descricaoAlimento : '';
-  
   }
 
-  retornarObj(): void{
-    console.log(this.temp)
-    console.log(this.item)
+  somaPorItemEnergia(itens: Item[]): number{
+    let soma: number = 0;
+
+    itens.forEach(item => {
+      if (item.alimentoTaco!.energiaKcal! == 'NaN'){
+        item.alimentoTaco!.energiaKcal! = '0'
+      }
+      soma += parseInt(item.alimentoTaco!.energiaKcal!) * item.quantidade!
+    });
+
+    return soma
   }
 
+  somaPorItemProteina(itens: Item[]): number{
+    let soma: number = 0;
 
-  private _filter(name: string): AlimentoTacoData[] {
-    const filterValue = name.toLowerCase();
+    itens.forEach(item => {
 
-    return this.alimentos.filter(option => option.descricaoAlimento!.toLowerCase().indexOf(filterValue) === 0);
+      if (item.alimentoTaco!.proteina! == "NaN"){
+        item.alimentoTaco!.proteina! = "0"
+        console.log(item.alimentoTaco!.proteina!)
+      }
+      soma += parseInt(item.alimentoTaco!.proteina!) * item.quantidade!
+    });
+
+    return soma
   }
+
+  somaPorItemCarboidrato(itens: Item[]): number{
+    let soma: number = 0;
+
+    itens.forEach(item => {
+      if (item.alimentoTaco!.carboidrato! == 'NaN'){
+        item.alimentoTaco!.carboidrato! = '0'
+      }
+      soma += parseInt(item.alimentoTaco!.carboidrato!) * item.quantidade!
+    });
+
+    return soma
+  }
+
+  somaPorItemGordura(itens: Item[]): number{
+    let soma: number = 0;
+
+    itens.forEach(item => {
+      if (item.alimentoTaco!.lipideos! == 'NaN'){
+        item.alimentoTaco!.lipideos! = '0'
+      }
+      soma += parseInt(item.alimentoTaco!.lipideos!) * item.quantidade!
+    });
+
+    return soma
+  }
+
+  /*     this.itensArray.forEach( item => {
+        item.somaNutriente!.somaEnergia! = parseInt(item.alimentoTaco!.energiaKcal!) * item.quantidade!
+      });
+      console.log("imprimindo a soma decalorias")
+      console.log(this.itensArray)
+ contEnergia += parseInt(item.alimentoTaco!.energiaKcal!) */
+
 
   findById() : void{
     this.serviceCliente.findById(this.id_cli!).subscribe((resposta) => {
@@ -228,44 +209,85 @@ export class ConsultaReadComponent implements OnInit {
       if (this.consultas.length == 0){
         this.inProgress = true
       }else{
-        this.inProgress = false
-      }
-
-      this.servicePrescricao.findAllByConsulta(this.id_con).subscribe((resposta) =>{
-        this.prescricoes = resposta;
-        console.log(this.prescricoes)
-        this.prescricao = this.prescricoes[this.prescricoes.length-1]
-        this.id_pres = this.prescricao.codigo!;
-        this.indexPrescricao = this.prescricoes.length
-
-        this.serviceRefeicao.findAllByPrescricao(this.id_pres).subscribe((resposta) =>{
-          this.refeicoes = resposta;
-          this.refeicao = this.refeicoes[this.refeicoes.length-1]
-          this.indexrefeicao = this.refeicoes.length
-          this.id_ref = this.refeicao.codigo!;
+        this.serviceRefeicao.findAllByConsulta(this.id_con!).subscribe( resposta =>{
+          this.refeiçoesData = resposta
+          this.indexrefeicao = this.refeiçoesData.length
           this.indexRefeicao2 = 0;
-          this.refeicoes.forEach((refeicao)=>{
+          this.refeiçoesData.forEach(refeicao => {
             this.indexRefeicao2++;
             refeicao.index = this.indexRefeicao2;
-          })
+            this.serviceItem.findAllByRefeicao(refeicao.codigo!).subscribe( itens =>{
+              console.log(refeicao.tipoRefeicao);
+              console.log(refeicao.index)
+              refeicao.somaCalorias = this.somaPorItemEnergia(itens)
+              refeicao.somaCarboidratos = this.somaPorItemCarboidrato(itens)
+              refeicao.somaGorduras = this.somaPorItemGordura(itens)
+              refeicao.somaProteinas = this.somaPorItemProteina(itens)
 
-          this.serviceItem.findAllByRefeicao(this.id_ref).subscribe((resposta)=>{
-            this.itens = resposta;
-            this.item = this.itens[this.itens.length-1]
-            this.id_item = this.item.codigo!;
-            this.indexItem = 0
-            this.itens.forEach((item)=>{
-              this.indexItem++;
-              item.index = this.indexItem;
+              console.log(refeicao.somaCalorias)  
+              this.totalCalorias += refeicao.somaCalorias
+              this.totalCarboidratos += refeicao.somaCarboidratos
+              this.totalProteinas += refeicao.somaProteinas
+              this.totalGorduras += refeicao.somaGorduras
+             // console.log(this.somaPorItem(itens))
+
             })
-
-
-          })
+          }); 
         })
-      })
-    })
+      }
 
-   
+
+    })
+  }
+  
+  createDialog(): void{
+    this.dialog.open(ConsultaCreateComponent, {
+      data: {id_cli: this.id_cli, id_nut: this.id_nut}
+    });
+  }
+
+  delete(): void {
+    this.serviceConsulta.delete(this.consulta.codigo!).subscribe((resposta) => {
+      
+        this.serviceConsulta.mensagem('Consulta deletada com sucesso!')
+        console.log(this.consulta)
+        window.location.reload()
+      }, err => {
+        for (let i = 0; i < err.error.errors.length; i++){
+          this.serviceConsulta.mensagem(err.error.errors[i].message)
+        }
+
+        console.log(err.errors.erro)
+        console.log(this.consulta)
+
+    })
+    
+  }
+
+  update(): void {
+    this.serviceConsulta.update(this.consulta).subscribe((resposta) => {
+      
+        this.serviceConsulta.mensagem('Consulta atualizada com sucesso!')
+        console.log(this.consulta)
+        console.log(resposta)
+        this.consulta = resposta
+        
+      }, err => {
+        for (let i = 0; i < err.error.errors.length; i++){
+          this.serviceConsulta.mensagem(err.error.errors[i].message)
+        }
+
+        console.log(err.errors.erro)
+        console.log(this.consulta)
+
+    })
+    
+  }
+
+  abrirRefeicoes(): void{
+    this.dialog.open(RefeicaoComponent, {
+      data: this.consulta
+    });
   }
 
   setaDireita(): void{
@@ -287,7 +309,6 @@ export class ConsultaReadComponent implements OnInit {
   setaEsquerda(): void{
     --this.indexConsulta
     this.consulta = this.consultas[this.indexConsulta -1]
-    
   
   }
 

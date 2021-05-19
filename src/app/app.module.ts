@@ -34,6 +34,12 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ConsultaReadComponent } from './components/views/consulta/consulta-read/consulta-read.component';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { ConsultaCreateComponent } from './components/views/consulta/consulta-create/consulta-create.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { RefeicaoComponent } from './components/views/refeicao/refeicao.component';
+
+import {MatExpansionModule} from '@angular/material/expansion';
+import { AlimentoComponent } from './components/views/alimento/alimento.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +55,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     ClienteDeleteComponent,
     ClienteUpdateComponent,
     ConsultaReadComponent,
+    ConsultaCreateComponent,
+    RefeicaoComponent,
+    AlimentoComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +84,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatProgressSpinnerModule,
     MatTableModule,
     MatNativeDateModule,
-    MatAutocompleteModule //imports 
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatExpansionModule //imports 
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}

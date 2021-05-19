@@ -1,7 +1,7 @@
 import { Cliente } from "../cliente/cliente.model";
 
 export interface Consulta {
-    codigo?: Number,
+    codigo?: number,
     dataConsulta?: Date,
     historicoSocialFamiliar?: String,
     peso?: Number,
@@ -13,5 +13,10 @@ export interface Consulta {
     taxaMB?: Number,
     diagnostico?: String,
     gastoEnergTot?: number,
-    cliente?: Cliente
+    prescricao?: String,
+    cliente?: Cliente,
+    carboidratosOfertados?: number,
+    proteinasOfertadas?: number,
+    gorduraOfertada?: number,
+    vetValorEnergOfertado?: number
 }

@@ -10,12 +10,13 @@ import { Refeicao } from './refeicao.model';
 })
 export class RefeicaoService {
 
+
   baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient, private _snack : MatSnackBar) { }
 
-  findAllByPrescricao(id_pres: Number): Observable<Refeicao[]> {
-    const url = `${this.baseUrl}/refeicoes?prescricao=${id_pres}`;
+  findAllByConsulta(id_con: Number): Observable<Refeicao[]> {
+    const url = `${this.baseUrl}/refeicoes?consulta=${id_con}`;
     return this.http.get<Refeicao[]>(url)    
   }
   
@@ -29,8 +30,8 @@ export class RefeicaoService {
     return this.http.put<Refeicao>(url, refeicao); //url e o corpo da requisição
   }
 
-  create(refeicao: Refeicao, id_pres: number): Observable<Refeicao[]> {
-    const url = `${this.baseUrl}/refeicoes?prescricao=${id_pres}`;
+  create(refeicao: Refeicao, id_con: Number): Observable<Refeicao[]> {
+    const url = `${this.baseUrl}/refeicoes?consulta=${id_con}`;
     return this.http.post<Refeicao[]>(url, refeicao)
   }
   delete(codigo: number) : Observable<void>{

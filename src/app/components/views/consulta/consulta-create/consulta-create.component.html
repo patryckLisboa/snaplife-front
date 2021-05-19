@@ -1,0 +1,61 @@
+<div style="height: 35rem;">
+      <div class="buttons" style="display: block; text-align: right;">
+        <button   class="mat-elevation-z15" (click)="create()" mat-stroked-button color="primary" style="margin-right: 3%;"> SALVAR </button>
+        <!--isso que eu coloquei no disabled é uma condição, fica desabilitado em quanto estiver retornando falso -->
+        <button  class="mat-elevation-z15" (click)="cancel()"  mat-stroked-button color="warn"> CANCELAR </button>
+        <br><br>
+      </div>
+    <mat-card-title>
+      <h3>Dados Antopométricos</h3>
+      <mat-form-field class="campoLogin">
+        <h2>Histórico social e familiar</h2>
+        <mat-label ></mat-label>
+        <textarea [(ngModel)]="consulta.historicoSocialFamiliar" matInput type="text" placeholder="Ex: Lorem Ipsum" maxlength="2000"></textarea>
+      </mat-form-field>
+
+      <mat-form-field class="dados"  appearance="fill">
+        <mat-label >Peso:</mat-label>
+        <input [(ngModel)]="consulta.peso"  placeholder="Ex: 70.00" matInput>
+      </mat-form-field>
+      <mat-form-field class="dados" appearance="fill">
+        <mat-label >Altura:</mat-label>
+        <input [(ngModel)]="consulta.altura"  placeholder="Ex: 1.70" matInput>
+      </mat-form-field>
+      <mat-form-field class="dados"  placeholder="Ex: 18" appearance="fill">
+        <mat-label >Idade:</mat-label>
+        <input [(ngModel)]="consulta.idade" matInput disabled>
+      </mat-form-field>
+      <mat-form-field class="dados" appearance="fill">
+        <mat-label >Sexo (m/f):</mat-label>
+        <input [(ngModel)]="consulta.sexo"  placeholder="Ex: F" matInput>
+      </mat-form-field>
+      <mat-form-field class="dados"  appearance="fill">
+        <mat-label >Taxa MB (kcal):</mat-label>
+        <input [(ngModel)]="consulta.taxaMB"  placeholder="Ex: 2000" matInput>
+      </mat-form-field>
+      <mat-form-field class="dados"  appearance="fill">
+        <mat-label >Gasto ET:</mat-label>
+        <input [(ngModel)]="consulta.gastoEnergTot" matInput disabled>
+      </mat-form-field>
+      <mat-form-field class="dados"  appearance="fill">
+        <mat-label >Tipo Físico:</mat-label>
+        <input [(ngModel)]="consulta.estadoCorporal" matInput placeholder="Ex: Sobrepeso">
+      </mat-form-field>
+      <mat-form-field class="dados"  appearance="fill">
+        <mat-label >Fator atividade:</mat-label>
+        <input [(ngModel)]="consulta.fatorAtividade" placeholder="Ex: 1.5" matInput>
+      </mat-form-field>
+
+      
+      <mat-form-field class="campoLogin" appearance="fill">
+        <h4>Diagnóstico:</h4>
+        <mat-label ></mat-label>
+        <textarea [(ngModel)]="consulta.diagnostico" matInput type="text" placeholder="Ex: Lorem Ipsum" maxlength="2000"></textarea>
+      </mat-form-field>
+
+      
+
+    </mat-card-title>
+
+    
+</div>

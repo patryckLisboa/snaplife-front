@@ -1,15 +1,15 @@
+  
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Item } from './item.model';
-
+import { Item } from './itens.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ItemService {
+export class ItensService {
 
   baseUrl = environment.baseUrl;
 

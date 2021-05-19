@@ -1,0 +1,64 @@
+  <div class="buttons" style="display: block; text-align: right;">
+      <button  class="mat-elevation-z15" (click)="cancel()"  mat-stroked-button color="warn"> CANCELAR </button>
+      <br><br>
+  </div>
+  <mat-form-field style=" width: 90%; margin: auto 5% auto 3%"  sticky>
+    <mat-label>Filtro</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Pesquisar..." #input>
+    <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+  <div class="mat-elevation-z8 content-table"  style="height: 450px; width: 100%; overflow: auto;">
+
+
+     <table  id="table" class="table"  mat-table [dataSource]='dataSource' matSort>
+        
+       <ng-container matColumnDef="numeroAlimento">
+         <th  mat-header-cell *matHeaderCellDef mat-sort-header style="width: 2rem;">Numero</th>
+         <td  id="linha"  mat-cell *matCellDef="let row"  (click)="selecionaAlimento(row)"  style="cursor: pointer;">{{ row.numeroAlimento }}</td>
+       </ng-container>
+
+       <ng-container matColumnDef="descricaoAlimento">
+         <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 2rem;">Descricao</th>
+         <td  id="linha"  mat-cell *matCellDef="let row" (click)="selecionaAlimento(row)" style="cursor: pointer;">{{ row.descricaoAlimento }}</td>
+       </ng-container>
+       
+       <ng-container matColumnDef="unidade">
+        <th  mat-header-cell *matHeaderCellDef mat-sort-header style="width: 2rem;">Unidade (g)</th>
+        <td  id="linha"  mat-cell *matCellDef="let row"  (click)="selecionaAlimento(row)"  style="cursor: pointer;">{{ row.unidade }}</td>
+      </ng-container>
+ 
+       <ng-container  matColumnDef="energiaKcal">
+         <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 2rem; ">Energia (kcal)</th>
+         <td  id="linha"  mat-cell *matCellDef="let row" (click)="selecionaAlimento(row)" style="cursor: pointer;">{{ row.energiaKcal }}</td>
+         
+       </ng-container>
+
+       <ng-container  matColumnDef="proteina">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 2rem; ">Proteinas (g)</th>
+        <td  id="linha"  mat-cell *matCellDef="let row" (click)="selecionaAlimento(row)" style="cursor: pointer;">{{ row.proteina }}</td>
+        
+      </ng-container>
+
+      <ng-container  matColumnDef="carboidrato">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 2rem; ">Carboidratos (g)</th>
+        <td  id="linha"  mat-cell *matCellDef="let row" (click)="selecionaAlimento(row)"  style="cursor: pointer;">{{ row.carboidrato }}</td>
+        
+      </ng-container>
+
+      <ng-container  matColumnDef="lipideos">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 2rem; ">Lipideos (g)</th>
+        <td  id="linha"  mat-cell *matCellDef="let row" (click)="selecionaAlimento(row)" style="cursor: pointer;">{{ row.lipideos }}</td>
+        
+      </ng-container>
+ 
+       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+       <tr *matNoDataRow>
+        <td colspan="4" style=" width: 100%; padding: 1% 1% .1rem 5%; text-align: center;">Nenhum dado encontrado <mat-progress-bar  mode="indeterminate"></mat-progress-bar></td>
+       </tr>
+     </table>
+     <mat-paginator [pageSizeOptions]="[7, 10, 25, 100]"></mat-paginator>
+ </div>

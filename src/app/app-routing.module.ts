@@ -4,6 +4,7 @@ import { ClienteCreateComponent } from './components/views/cliente/cliente-creat
 import { ClienteDeleteComponent } from './components/views/cliente/cliente-delete/cliente-delete.component';
 import { ClienteUpdateComponent } from './components/views/cliente/cliente-update/cliente-update.component';
 import { ClienteComponent } from './components/views/cliente/cliente.component';
+import { ConsultaCreateComponent } from './components/views/consulta/consulta-create/consulta-create.component';
 import { ConsultaReadComponent } from './components/views/consulta/consulta-read/consulta-read.component';
 import { HomeComponent } from './components/views/home/home.component'
 import { LoginComponent } from './components/views/login/login.component';
@@ -44,8 +45,11 @@ const routes: Routes = [
   {
     path: 'nutricionista/:id/clientes/:id_cli/consultas',
     component: ConsultaReadComponent
-  }
-
+  },
+  {
+    path: 'nutricionista/:id/clientes/:id_cli/consultas/create',
+    component: ConsultaCreateComponent
+  },
 ];
 
 @NgModule({

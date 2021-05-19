@@ -1,0 +1,73 @@
+table {
+    width: 800px;
+  }
+  
+  td.mat-column-star {
+    width: 20px;
+    padding-right: 8px;
+  }
+  
+  th.mat-column-position, td.mat-column-position {
+    padding-left: 8px;
+  }
+
+
+  .content{
+    width: 90%;
+    margin: .5rem auto .1rem auto;
+
+}
+
+.title{
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+button{
+    margin-bottom: 0px;
+}
+
+.title h3{
+    font-size: 2rem;
+    color: rgb(97, 97, 97);
+    font-weight: 500;
+}
+
+.table{
+    width: 100%;
+    
+}
+
+i{
+    text-align: center;
+}
+  
+
+.edit{
+    color: rgb(255, 251, 0);
+}
+a{
+    text-decoration: none;
+}
+.delete{
+    color: rgb(255, 73, 73);
+    margin-left: .6rem;
+}
+
+.mat-header{
+    width: 5rem;
+    text-align: center;
+}
+
+#linha:hover {
+    background: rgba(0, 135, 49, 0.097);
+  }
+
+@media(max-width: 450px){
+    .content{
+        width: 100%;
+        
+    
+    }
+}
+

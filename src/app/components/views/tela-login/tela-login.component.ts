@@ -34,8 +34,10 @@ export class TelaLoginComponent implements OnInit {
   findAll(){
     this.service.findAll().subscribe(resposta => {
       this.nutricionistas = resposta;
+      console.log(this.nutricionistas)
     });
   }
+
   onkeypress(event: any) {
     if (event.keyCode === 13) {
       this.navegarParaCategoriaClientes();
@@ -49,6 +51,7 @@ export class TelaLoginComponent implements OnInit {
         this.id = nut.codigo || 0;
         this.router.navigate([`/nutricionista/${this.id}/clientes`]);
       }
+    
     })
   }
 }
